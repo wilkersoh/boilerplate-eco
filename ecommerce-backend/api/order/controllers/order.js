@@ -54,7 +54,9 @@ module.exports = {
    * @param {any} ctx
    */
   async create(ctx) {
-    const { product } = ctx.request.body;
+    const { product, quantity } = ctx.request.body;
+    const orderQuantity = parseInt(quantity.value);
+
     if (!product) {
       return ctx.throw(400, "Please specify a product");
     }
@@ -82,18 +84,19 @@ module.exports = {
             },
             unit_amount: fromDecimalToInt(realProduct.price),
           },
-          quantity: 1,
+          quantity: orderQuantity,
         },
       ],
     });
 
     // Create the order in order strapi
-    const newOrder = await strapi.services.order.create({
+    await strapi.services.order.create({
       user: user.id,
-      product: realProduct.id,
-      total: realProduct.price,
       status: "unpaid",
+      total: realProduct.price * orderQuantity,
       checkout_session: session.id,
+      product: realProduct.id,
+      quantity: orderQuantity,
     });
 
     return { id: session.id };

@@ -99,3 +99,10 @@ How i started from:
 41. Go To Strapi Admin - Settings - identity - public (checked: order's confirm)
 42. Test Api with JWT Token - Body(JSON) - http://localhost:1337/orders/confirm
 43. Successful (success_url, order controller, hit confirm function) - Strapi Order unpaid updated to paid
+44. Yarn add strapi-provider-upload-aws-s3 in backend for upload image to cloud
+45. create ./config/plugins.js [docs](https://strapi.io/documentation/developer-docs/latest/plugins/upload.html#using-a-provider)
+46. Go to aws s3 - create bucket
+47. Copy bucket name into plguins.js and *region ap-southeast-1*
+48. Uncheck *Block all public access*, then it able to file upload
+49. Click top bar name - security credentials - create access keys
+50. access key id and secret
